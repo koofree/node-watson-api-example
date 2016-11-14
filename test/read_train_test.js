@@ -7,7 +7,7 @@ var assert = require('assert');
 
 module.exports = function () {
 
-    var filepath = 'data/train/review_data_train.csv';
+    var filepath = 'data/source/data.csv';
     var options = {
         separate: true
     };

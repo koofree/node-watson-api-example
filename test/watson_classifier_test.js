@@ -6,7 +6,7 @@ var watson_classifier = require('../data/js/watson_classifier');
 
 module.exports = function () {
 
-    var test_text = '이거 버그 너무 심함.. ㅜㅜ';
+    var test_text = '오늘 너무 덥지 않냐?';
     
     var print_result = function (err, response) {
         if (err)
