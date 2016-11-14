@@ -10,20 +10,34 @@ var extend = require('extend');
 module.exports = function (filepath, callback, options) {
     var DEFAULT_OPTIONS = {
         separate: true,
-        csv: false
+        csv: false,
+        headers: false,
+        delimiter: ',',
+        limit_count: 15000
     };
 
     options = extend(DEFAULT_OPTIONS, options);
 
     fs.readFile(filepath, 'utf-8', function (err, text) {
         var obj = {};
+        var temp_options = extend({}, options);
+        if (temp_options.headers) {
+            temp_options.headers = true;
+        }
 
-        csv.fromString(text, {header: false})
+        csv.fromString(text, temp_options)
             .on("data", function (data) {
-                if (obj[data[1]] == undefined) {
-                    obj[data[1]] = [];
+                if (options.headers) {
+                    if (obj[data[options.headers[0]]] == undefined) {
+                        obj[data[options.headers[0]]] = [];
+                    }
+                    obj[data[options.headers[0]]].push(data[options.headers[1]]);
+                } else {
+                    if (obj[data[1]] == undefined) {
+                        obj[data[1]] = [];
+                    }
+                    obj[data[1]].push(data[0]);
                 }
-                obj[data[1]].push(data[0]);
             })
             .on("end", function () {
                 if (options.separate) {
@@ -35,6 +49,9 @@ module.exports = function (filepath, callback, options) {
                         });
 
                         var half_count = obj[key].length / 2;
+                        if (half_count > options.limit_count) {
+                            half_count = options.limit_count;
+                        }
                         train[key] = obj[key].splice(0, half_count);
                         test[key] = obj[key];
                     });
@@ -63,7 +80,14 @@ module.exports = function (filepath, callback, options) {
                     }
                 } else {
                     if (options.csv) {
-                        csv.writeToString(obj, {header: false}, function (err, data) {
+                        var array = [];
+                        Object.keys(obj).forEach(function (key) {
+                            obj[key].forEach(function (value) {
+                                array.push([value, key]);
+                            });
+                        });
+                        csv.writeToString(array, {headers: false}, function (err, data) {
+                            if (err) return callback(err, text);
                             return callback(err, text, data);
                         });
                     } else {

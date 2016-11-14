@@ -14,4 +14,4 @@ read_train('data/train/data_train.csv', function (err, text) {
         fs.writeFile('training_result.json', response_text);
         console.log(response_text);
     });
-});
+}, {separate: false, headers: false, delimiter: ',', csv: true});

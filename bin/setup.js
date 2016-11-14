@@ -9,4 +9,4 @@ var read_train = require('../data/js/read_train');
 read_train('data/source/data.csv', function (err, text, train, test) {
     fs.writeFile('data/train/data_train.csv', train);
     fs.writeFile('data/train/data_test.csv', test);
-}, {separate: true, csv: true});
+}, {separate: true, headers: ["label", "document", "id"], delimiter: '\t', csv: true, limit_count: 5000});

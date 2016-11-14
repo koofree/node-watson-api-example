@@ -23,6 +23,7 @@
     "fast-csv": "2.3.0",
     "extend": "3.0.0",
     "assert": "1.4.1",
-    "async": "2.1.2"
+    "async": "2.1.2",
+    "classifier": "0.1.0"
   }
 }

@@ -49,21 +49,22 @@ module.exports = function () {
                     if (options.limit_count < data[key].length) {
                         this_data = this_data.slice(0, options.limit_count);
                     }
-
                     this_data.forEach(function (text) {
-                        calls.push(function (_callback) {
-                            natural_language_classifier.classify({
-                                text: text,
-                                classifier_id: classifier_id
-                            }, function (err, response) {
-                                if (err) return _callback(err);
+                        if ((typeof text === 'string' || text instanceof String) && (text.length > 0)) {
+                            calls.push(function (_callback) {
+                                natural_language_classifier.classify({
+                                    text: text,
+                                    classifier_id: classifier_id
+                                }, function (err, response) {
+                                    if (err) return _callback(err);
 
-                                var result = [response['text'], response['top_class'], key, response['top_class'] == key];
+                                    var result = [response['text'], response['top_class'], key, response['top_class'] == key];
 
-                                results['data'].push(result);
-                                _callback(err, result);
+                                    results['data'].push(result);
+                                    _callback(err, result);
+                                });
                             });
-                        });
+                        }
                     });
                 });
                 async.parallel(calls, function (err, result) {
