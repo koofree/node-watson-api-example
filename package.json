@@ -1,0 +1,28 @@
+{
+  "license": "MIT",
+  "name": "watson-node-play",
+  "description": "Sample codes for using watson APIs.",
+  "email": "yklee@ideabove.com",
+  "url": "http://github.com/kool22",
+  "version": "0.0.1",
+  "private": false,
+  "scripts": {
+    "test": "node ./test/index.js",
+    "sayhello": "node ./bin/sayhello.js",
+    "classifier.test": "node ./bin/test.js",
+    "classifier.training": "node ./bin/training.js",
+    "classifier.list": "node ./bin/list.js",
+    "classifier.setup": "node ./bin/setup.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kool22/watson-node-play.git"
+  },
+  "dependencies": {
+    "watson-developer-cloud": "2.8.2",
+    "fast-csv": "2.3.0",
+    "extend": "3.0.0",
+    "assert": "1.4.1",
+    "async": "2.1.2"
+  }
+}

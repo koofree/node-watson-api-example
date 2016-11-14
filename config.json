@@ -1,0 +1,10 @@
+{
+  "watson": {
+    "username": "",
+    "password": "",
+    "classifier": {
+      "id": "",
+      "language": ""
+    }
+  }
+}
