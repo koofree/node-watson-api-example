@@ -9,10 +9,12 @@
   "scripts": {
     "test": "node ./test/index.js",
     "sayhello": "node ./bin/sayhello.js",
+    "nb": "node ./bin/nb.js",
     "classifier.test": "node ./bin/test.js",
     "classifier.training": "node ./bin/training.js",
     "classifier.list": "node ./bin/list.js",
-    "classifier.setup": "node ./bin/setup.js"
+    "classifier.setup": "node ./bin/setup.js",
+    "analyzer.analyze": "node ./bin/analyze.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
     "extend": "3.0.0",
     "assert": "1.4.1",
     "async": "2.1.2",
-    "classifier": "0.1.0"
+    "classifier": "0.1.0",
+    "moment": "2.16.0"
   }
 }

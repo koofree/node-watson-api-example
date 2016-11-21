@@ -4,14 +4,20 @@
 
 var watson_classifier = require('../data/js/watson_classifier');
 var read_train = require('../data/js/read_train');
+var result_writer = require('../util/result_writer');
 var fs = require('fs');
+
+var options = {
+    separate: false,
+    headers: false,
+    delimiter: ',',
+    csv: true
+};
 
 read_train('data/train/data_train.csv', function (err, text, obj) {
     watson_classifier.training(obj, function (err, response) {
         if (err) throw err;
 
-        var response_text = JSON.stringify(response, null, 2);
-        fs.writeFile('training_result.json', response_text);
-        console.log(response_text);
+        result_writer.json(response, 'training_result');
     });
-}, {separate: false, headers: false, delimiter: ',', csv: true});
+}, options);

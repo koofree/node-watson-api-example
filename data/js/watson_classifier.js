@@ -9,8 +9,8 @@ var extend = require('extend');
 
 module.exports = function () {
     var natural_language_classifier = new NaturalLanguageClassifierV1({
-        username: config.watson.username,
-        password: config.watson.password
+        username: config.watson.classifier.username,
+        password: config.watson.classifier.password
     });
 
     var classifier_id = config.watson.classifier.id;
@@ -20,6 +20,9 @@ module.exports = function () {
         list: function (callback) {
             natural_language_classifier.list({}, callback);
         },
+        remove: function (classifier_id, callback) {
+            natural_language_classifier.remove({classifier_id: classifier_id}, callback);
+        },
         training: function (data, callback) {
             var params = {
                 training_data: data,
@@ -28,6 +31,7 @@ module.exports = function () {
             natural_language_classifier.create(params, callback);
         },
         test: function (data, callback, options) {
+            /** @namespace Number.MAX_SAFE_INTEGER */
             var DEFAULT_OPTIONS = {
                 limit_count: Number.MAX_SAFE_INTEGER
             };
@@ -60,7 +64,6 @@ module.exports = function () {
 
                                     var result = [response['text'], response['top_class'], key, response['top_class'] == key];
 
-                                    results['data'].push(result);
                                     _callback(err, result);
                                 });
                             });
@@ -71,6 +74,8 @@ module.exports = function () {
                     if (err) {
                         throw err;
                     }
+
+                    results['data'] = result;
 
                     var all_count = results['data'].length;
                     var true_count = 0;

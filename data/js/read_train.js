@@ -18,6 +18,9 @@ module.exports = function (filepath, callback, options) {
 
     options = extend(DEFAULT_OPTIONS, options);
 
+    /** @namespace options.limit_count */
+    /** @namespace options.csv */
+
     fs.readFile(filepath, 'utf-8', function (err, text) {
         var obj = {};
         var temp_options = extend({}, options);

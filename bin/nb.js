@@ -4,10 +4,13 @@
 
 var classifier = require('classifier');
 var read_train = require('../data/js/read_train');
+var result_writer = require('../util/result_writer');
 
 var nb = new classifier.Bayesian();
 
-read_train('../data/train/review_data_train2.csv', function (err, data, train) {
+var options = {separate: false};
+
+read_train('data/train/data_train.csv', function (err, data, train) {
     if (err) throw err;
 
     var train_data_count = 0;
@@ -18,13 +21,12 @@ read_train('../data/train/review_data_train2.csv', function (err, data, train) {
         });
     });
 
-    read_train('../data/train/review_data_test2.csv', function (err, data, test) {
+    read_train('data/train/data_test.csv', function (err, data, test) {
         var result_true = 0;
         var result_false = 0;
         Object.keys(test).forEach(function (key) {
             test[key].forEach(function (value) {
                 var result = nb.classify(value);
-                console.log(value + '##' + key + "##" + result);
                 if (result == key) {
                     result_true += 1;
                 } else {
@@ -34,8 +36,11 @@ read_train('../data/train/review_data_train2.csv', function (err, data, train) {
         });
         var total_count = (result_true + result_false);
         var rate = result_true / total_count * 100;
-        console.log('test data count is ' + train_data_count);
-        console.log('total count is ' + total_count);
-        console.log('correct rate is ' + rate);
-    }, {separate: false});
-}, {separate: false});
+
+        result_writer.json({
+            test: train_data_count,
+            total: total_count,
+            rate: rate
+        }, 'nb_test_result');
+    }, options);
+}, options);

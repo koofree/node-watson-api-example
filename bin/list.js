@@ -3,8 +3,8 @@
  */
 
 var watson_classifier = require('../data/js/watson_classifier');
+var result_writer = require('../util/result_writer');
 
 watson_classifier.list(function (err, response) {
-    var result = JSON.stringify(response, null, 2);
-    console.log(result);
+    result_writer.json(response, 'classifier_list');
 });
