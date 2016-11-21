@@ -1,10 +1,17 @@
 {
   "watson": {
-    "username": "",
-    "password": "",
     "classifier": {
+      "username": "",
+      "password": "",
       "id": "",
-      "language": ""
+      "language": "ko"
+    },
+    "alchemy": {
+      "apikey": ""
+    },
+    "tone": {
+      "password": "",
+      "username": ""
     }
   }
 }
